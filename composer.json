@@ -1,0 +1,41 @@
+{
+  "name":"apiclub/amocrm",
+  "description": "Work with amocrm api",
+  "version": "0.0.1",
+  "keywords": ["php","amocrm","api"],
+  "homepage": "https://api-club.ru",
+  "license": "MIT",
+  "authors" : [
+    {
+      "name": "Viktor Gvozdikov",
+      "homepage": "https://module.bz/",
+      "email": "victor@module.bz",
+      "role": "developer"
+    }
+  ],
+  "support": {
+    "email": "victor@module.bz",
+    "issues": "https://github.com/apiclub/php-amocrm/issues",
+    "source": "https://github.com/apiclub/php-amocrm",
+    "wiki": "https://github.com/apiclub/php-amocrm/wiki",
+    "forum": "",
+    "docs": "",
+    "rss": "",
+    "chat": ""
+  },
+  "autoload": {
+    "psr-4": {
+      "ApiClub\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ApiClub\\": "src/"
+    }
+  },
+  "require": {
+    "php":">=7.2.0",
+    "ext-json": "*",
+    "ext-curl": "*"
+  }
+}
