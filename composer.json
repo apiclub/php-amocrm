@@ -17,11 +17,7 @@
     "email": "victor@module.bz",
     "issues": "https://github.com/apiclub/php-amocrm/issues",
     "source": "https://github.com/apiclub/php-amocrm",
-    "wiki": "https://github.com/apiclub/php-amocrm/wiki",
-    "forum": "",
-    "docs": "",
-    "rss": "",
-    "chat": ""
+    "wiki": "https://github.com/apiclub/php-amocrm/wiki"
   },
   "autoload": {
     "psr-4": {
