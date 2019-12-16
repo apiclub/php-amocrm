@@ -1,2 +1,3 @@
 # php-amocrm
-Work with api amocrm.ru
+Work with api amocrm.ru  
+Status: developing
