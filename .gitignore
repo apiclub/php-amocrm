@@ -2,3 +2,4 @@
 node_modules
 /example/test_access.php
 composer.lock
+vendor
