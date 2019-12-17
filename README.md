@@ -2,13 +2,13 @@
 Статус: в разработке
 
 ## Запросы
-<a name="#account"></a>
+<a name="account"></a>
 account( [ApiCLUB\request\options\Account](#request_options_account) $options )  
 Возвращает информацию об аккаунте
 
 
 ## Настройки
-<a name="#request_options_account"></a>
+<a name="request_options_account"></a>
 ##### ApiCLUB\request\options\Account
 Настройки для запроса [account()](#account)
 
