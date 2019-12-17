@@ -9,26 +9,26 @@ account( [ApiCLUB\request\options\Account](#request_options_account) $options )
 
 ## Настройки
 <a name="request_options_account"></a>
-##### ApiCLUB\request\options\Account
+### ApiCLUB\request\options\Account
 Настройки для запроса [account()](#account)
 
-**$custom_fields** = false;    
-bool Вернёт информацию по всем дополнительным полям в аккаунте    
+bool **$custom_fields** = false;    
+Вернёт информацию по всем дополнительным полям в аккаунте    
 
-**$users** = false;  
-bool Вернёт информацию по всем пользователям в аккаунте  
+bool **$users** = false;  
+Вернёт информацию по всем пользователям в аккаунте  
 
-**$pipelines** = false;  
-bool Вернёт информацию по всем цифровым воронкам в аккаунте  
+bool **$pipelines** = false;  
+Вернёт информацию по всем цифровым воронкам в аккаунте  
 
-**$groups** = false;  
-bool Вернёт информацию по всем группам пользователей в аккаунте  
+bool **$groups** = false;  
+Вернёт информацию по всем группам пользователей в аккаунте  
 
-**$note_types** = false;
-bool Вернёт информацию по всем типам дополнительных полей в аккаунте
+bool **$note_types** = false;  
+Вернёт информацию по всем типам дополнительных полей в аккаунте
 
-**$task_types** = false;  
-bool Вернёт информацию по всем типам задач в аккаунте  
+bool **$task_types** = false;  
+Вернёт информацию по всем типам задач в аккаунте  
 
-**$free_users** = false;  
-bool Вернёт информацию в том числе и по бесплатным пользователям  
+bool **$free_users** = false;  
+Вернёт информацию в том числе и по бесплатным пользователям  
