@@ -4,6 +4,10 @@ namespace ApiClub;
 use ApiClub\AmoCRM\exceptions\AmoCRM as Exceptions;
 use ApiClub\AmoCRM\request\options\Account as RequestOptionsAccount;
 
+/**
+ * Class AmoCRM
+ * @package ApiClub
+ */
 class AmoCRM {
     /** @var string токен, который нужно получить в личном кабинете пользователя */
     var $token = '';
@@ -39,7 +43,18 @@ class AmoCRM {
         return $this->request('api/v2/account',$data);
     }
 
-    function access_token($client_id,$client_secret,$code,$redirect_url){
+    function refreshToken(string $client_id,string $client_secret,string $refresh_token,string $redirect_url){
+        $data = [
+            'client_id'     => $client_id,
+            'client_secret' => $client_secret,
+            'grant_type'    => 'refresh_token',
+            'refresh_token' => $refresh_token,
+            'redirect_uri'  => $redirect_url,
+        ];
+        return $this->request('oauth2/access_token',$data,'POST');
+    }
+
+    function accessToken(string $client_id,string $client_secret,string $code,string $redirect_url){
         $data = [
             'client_id'     => $client_id,
             'client_secret' => $client_secret,
@@ -47,16 +62,22 @@ class AmoCRM {
             'code'          => $code,
             'redirect_uri'  => $redirect_url,
         ];
-        $this->request('oauth2/access_token',$data,'POST');
+        return $this->request('oauth2/access_token',$data,'POST');
     }
 
 
+    /**
+     * Функция для генерации ссылки api для поддомена пользователя
+     * @param string $link
+     * @return string
+     */
     protected function link($link = ''){
         return 'https://'.$this->domain.'.amocrm.ru/'.$link;
     }
 
+
     protected function request($link,$data=[],$custom_request="GET"){
-        return self::_request($this->domain,$this->token,$this->link($link),$data,$custom_request);
+        return self::_request($this->domain, $this->token, $this->link($link), $data, $custom_request);
     }
 
     static function _request($domain,$token,$link,$data = [],$custom_request="GET"){
