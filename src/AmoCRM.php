@@ -3,6 +3,7 @@ namespace ApiClub;
 
 use ApiClub\AmoCRM\exceptions\AmoCRM as Exceptions;
 use ApiClub\AmoCRM\request\options\Account as RequestOptionsAccount;
+use ApiClub\AmoCRM\request\options\Lead as RequestOptionsLead;
 
 /**
  * Class AmoCRM
@@ -31,13 +32,13 @@ class AmoCRM {
     function account(RequestOptionsAccount $options = null){
         $data = [];
         if($options) {
-            if ($options->custom_fields)  $data['with'][] = 'custom_fields';
-            if ($options->users)          $data['with'][] = 'users';
-            if ($options->pipelines)      $data['with'][] = 'pipelines';
-            if ($options->groups)         $data['with'][] = 'groups';
-            if ($options->note_types)     $data['with'][] = 'note_types';
-            if ($options->task_types)     $data['with'][] = 'task_types';
-            if ($data['with']) $data['with'] = implode(",", $data['with']);
+            if ($options->custom_fields)  $data['with'][]     = 'custom_fields';
+            if ($options->users)          $data['with'][]     = 'users';
+            if ($options->pipelines)      $data['with'][]     = 'pipelines';
+            if ($options->groups)         $data['with'][]     = 'groups';
+            if ($options->note_types)     $data['with'][]     = 'note_types';
+            if ($options->task_types)     $data['with'][]     = 'task_types';
+            if ($data['with'])            $data['with']       = implode(",", $data['with']);
             if ($options->free_users)     $data['free_users'] = 'Y';
         }
         return $this->request('api/v2/account',$data);
@@ -76,6 +77,22 @@ class AmoCRM {
     }
 
 
+    /**
+     * @param RequestOptionsLead[] | RequestOptionsLead $leads
+     */
+    public function addLeads($leads){
+        if(!is_array($leads)) $leads = [$leads];
+        $data = [];
+        /** @var RequestOptionsLead $lead */
+        foreach ($leads as $lead){
+            if(!$lead->created_at) {
+                $lead->created_at = time();
+            }
+            $data[] = $lead->prepare();
+        }
+        return $this->request('api/v2/leads',['add'=>$data],'POST');
+    }
+
     protected function request($link,$data=[],$custom_request="GET"){
         return self::_request($this->domain, $this->token, $this->link($link), $data, $custom_request);
     }
@@ -102,22 +119,18 @@ class AmoCRM {
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . '/cookie.txt'); #PHP>5.3.6 dirname(__FILE__) -> __DIR__
-        curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie.txt'); #PHP>5.3.6 dirname(__FILE__) -> __DIR__
+        curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie.txt');  #PHP>5.3.6 dirname(__FILE__) -> __DIR__
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
 
         $out = curl_exec($curl); #Инициируем запрос к API и сохраняем ответ в переменную
-
-        echo '<pre>';
-        echo var_dump($link,$out);
-        echo '</pre>';
 
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE); #Получим HTTP-код ответа сервера
         curl_close($curl); #Завершаем сеанс cURL
         $out = json_decode($out,true);
 
         echo '<pre>';
-        echo var_dump($out);
+        echo var_dump($link,$out);
         echo '</pre>';
 
         return $out;
