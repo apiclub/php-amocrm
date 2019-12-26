@@ -1,5 +1,8 @@
 <?
-
+use ApiClub\AmoCRM;
+use ApiClub\AmoCRM\request\options\Lead as ROLead;
+use ApiClub\AmoCRM\request\options\AddLead as ROAddLead;
+use ApiClub\AmoCRM\request\options\UpdateLead as ROUpdateLead;
 use ApiClub\AmoCRM\request\options\Account as ROAccount;
 
 include_once "../vendor/autoload.php";
@@ -9,7 +12,9 @@ $token  = '';
 
 include_once "test_access.php";
 
-$amo = new \ApiClub\AmoCRM($domain,$token);
+$time = date('Y.m.d H:i:s');
+
+$amo = new AmoCRM($domain,$token);
 //$amo->refreshToken($client_id,$client_secret,$refresh_token,$redirect_url);
 //$amo->accessToken($client_id,$client_secret,$code,$redirect_url);
 /*
@@ -19,9 +24,9 @@ $account_options->free_users = true;
 $amo->account($account_options);
 /**/
 
-//*
-$x = new \ApiClub\AmoCRM\request\options\Lead('Дарова');
-$y = new \ApiClub\AmoCRM\request\options\Lead('Дарова 3');
+/*
+$x = new Lead('Дарова');
+$y = new Lead('Дарова 3');
 $amo->addLeads($x);
 $x->name = 'Дарова 2';
 
@@ -32,3 +37,10 @@ echo '</pre>';
 
 /**/
 
+$x = new ROLead('Hello '.$time);
+$y = new ROUpdateLead(1704795,'Hi '.$time);
+$r = $amo->updateLeads([1704797=>$x,1=>null,'sex'=>$y]);
+
+echo '<pre>';
+echo var_dump($r);
+echo '</pre>';

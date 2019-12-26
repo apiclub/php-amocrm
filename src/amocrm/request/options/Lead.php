@@ -8,6 +8,8 @@ namespace ApiClub\AmoCRM\request\options;
  * @package ApiClub\AmoCRM
  */
 class Lead {
+    /** @var int  */
+    var $id = 0;
     /** @var string  */
     var $name = '';
     /** @var int  */
@@ -33,15 +35,19 @@ class Lead {
     /** @var array  */
     var $catalog_elements_id = [];
 
-    public function __construct(string $name = '',int $updated_at = null) {
+    public function __construct(string $name = '', int $status_id = 0, int $updated_at = null) {
         $this->name       = $name;
         if($updated_at) {
             $this->updated_at = $updated_at;
+        }
+        if($status_id) {
+            $this->status_id = $status_id;
         }
     }
 
     public function prepare(){
         $res = [];
+        if($c = intval($this->id))                     $res['id'] = $c;
         if($c = trim($this->name))                     $res['name'] = $c;
         if($c = intval($this->created_at))             $res['created_at'] = $c;
         if($c = intval($this->updated_at))             $res['updated_at'] = $c;
@@ -57,3 +63,4 @@ class Lead {
         return $res;
     }
 }
+

@@ -1,15 +1,22 @@
 <?
 namespace ApiClub;
 
-use ApiClub\AmoCRM\exceptions\AmoCRM as Exceptions;
-use ApiClub\AmoCRM\request\options\Account as RequestOptionsAccount;
-use ApiClub\AmoCRM\request\options\Lead as RequestOptionsLead;
+use ApiClub\AmoCRM\exceptions\AmoCRM           as Exceptions;
+use ApiClub\AmoCRM\request\options\Account     as RequestOptionsAccount;
+use ApiClub\AmoCRM\request\options\Lead        as RequestOptionsLead;
+use ApiClub\AmoCRM\request\options\AddLead     as RequestOptionsAddLead;
+use ApiClub\AmoCRM\request\options\UpdateLead  as RequestOptionsUpdateLead;
 
 /**
  * Class AmoCRM
  * @package ApiClub
  */
 class AmoCRM {
+
+    const OPTIONS_LEAD        = 'ApiClub\AmoCRM\request\options\Lead';
+    const OPTIONS_ADD_LEAD    = 'ApiClub\AmoCRM\request\options\AddLead';
+    const OPTIONS_UPDATE_LEAD = 'ApiClub\AmoCRM\request\options\UpdateLead';
+
     /** @var string токен, который нужно получить в личном кабинете пользователя */
     var $token = '';
     /** @var string поддомен пользователя */
@@ -89,9 +96,12 @@ class AmoCRM {
         $res  = [];
         /** @var RequestOptionsLead $lead */
         foreach ($leads as $k=>$lead){
-            if(get_class($lead)=='ApiClub\AmoCRM\request\options\Lead') {
+            if(in_array(get_class($lead),[self::OPTIONS_LEAD,self::OPTIONS_ADD_LEAD,self::OPTIONS_UPDATE_LEAD])) {
                 if (!$lead->created_at) {
                     $lead->created_at = time();
+                }
+                if ($lead->id) {
+                    $lead->id = null;
                 }
                 $data[] = $lead->prepare();
                 $keys[] = $k;
@@ -101,6 +111,40 @@ class AmoCRM {
         $r =  $this->request('api/v2/leads',['add'=>$data],'POST');
         foreach ($r['_embedded']['items'] as $k=>$v){
             $res[$keys[$k]] = $v['id'];
+        }
+        return $res;
+    }
+
+    /**
+     * Функция обновления существующих лидов
+     * @param RequestOptionsLead[] | RequestOptionsLead $leads
+     * @return array ассоциативный массив id добавленных сущностей
+     */
+    public function updateLeads($leads):array {
+        if(!is_array($leads)) $leads = [$leads];
+        $data = [];
+        $keys = [];
+        $res  = [];
+        /** @var RequestOptionsLead $lead */
+        foreach ($leads as $k=>$lead){
+            if(in_array(get_class($lead),[self::OPTIONS_LEAD,self::OPTIONS_ADD_LEAD,self::OPTIONS_UPDATE_LEAD])) {
+                if (!$lead->updated_at) {
+                    $lead->updated_at = time();
+                }
+                if (!$lead->status_id) {
+                    $lead->status_id = 0;
+                }
+                if (!$lead->id) {
+                    $lead->id = $k;
+                }
+                $data[] = $lead->prepare();
+                $keys[] = $k;
+            }
+            $res[$k] = false;
+        }
+        $r =  $this->request('api/v2/leads',['update'=>$data],'POST');
+        foreach ($r['_embedded']['items'] as $k=>$v){
+            $res[$keys[$k]] = true;
         }
         return $res;
     }

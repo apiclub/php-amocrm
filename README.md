@@ -6,17 +6,46 @@
 - [account](#account)
 
 ### Лиды
-- [addLeads](#add_leads)
-- [updateLeads](#update_leads)
+- [addLeads](#add_leads) - добавляет лидов
+- [updateLeads](#update_leads) - обновляет лиды
 
 
-## Запросы
-<a name="account"></a>
-account( [ApiCLUB\AmoCRM\request\options\Account](#request_options_account) $options )  
+## Стандартные запросы
+### Аккаунт
+- <a name="account"></a>
+account( [ApiCLUB\AmoCRM\request\options\Account](#request_options_account) $options )    
 Возвращает информацию об аккаунте  
 
+### Лиды
 <a name="add_leads"></a>
-addLeads([ApiClub\AmoCRM\request\options\Lead[]](#request_options_lead) | [ApiClub\AmoCRM\request\options\Lead](#request_options_lead) $leads):array
+#### addLeads
+addLeads([ApiClub\AmoCRM\request\options\Lead[]](#request_options_lead) | [ApiClub\AmoCRM\request\options\Lead](#request_options_lead) $leads):array  
+Функция, которая добавляет лиды и возвращает ассоциативный массив с id добавленных лидов.
+
+#### Базовый пример
+[Исходный код](example/lead/add/01_basic.php)
+```php
+<?
+
+use ApiClub\AmoCRM;
+use ApiClub\AmoCRM\request\options\Lead as ROLead;
+
+// Путь к composer autoload
+include_once "vendor/autoload.php";
+
+// Домен и токен для подключения к AmoCRM
+$domain = '';
+$token  = '';
+
+$amo = new AmoCRM($domain,$token);
+$lead_options = new ROLead('Название лида');
+$res = $amo->addLeads($lead_options); // [0]=>id созданного лида
+
+```
+
+<a name="update_leads"></a>
+#### updateLeads
+updateLeads([ApiClub\AmoCRM\request\options\Lead[]](#request_options_lead) | [ApiClub\AmoCRM\request\options\Lead](#request_options_lead) $leads):array
 
 
 ## Настройки
@@ -52,3 +81,10 @@ bool **$free_users** = false;
 Настройки для запросов: 
 - [addLeads()](#add_leads)
 - [updateLeads()](#update_leads)
+
+
+<a name="request_options_add_lead"></a>
+### ApiCLUB\AmoCRM\request\options\AddLead
+
+<a name="request_options_update_lead"></a>
+### ApiCLUB\AmoCRM\request\options\UpdateLead
