@@ -15,19 +15,20 @@
 - [ApiClub\AmoCRM\request\options\AddLead](#request_options_add_lead) - Класс для быстрого создания настроек для добавления лидов
 - [ApiClub\AmoCRM\request\options\UpdateLead](#request_options_update_lead)  - Класс для быстрого создания настроек для обновления лидов
 
-## Стандартные запросы
-### Аккаунт
+
+# Стандартные запросы
+## Аккаунт
 - <a name="account"></a>
 account( [ApiCLUB\AmoCRM\request\options\Account](#request_options_account) $options )    
 Возвращает информацию об аккаунте  
 
-### Лиды
+## Лиды
 <a name="add_leads"></a>
-#### addLeads
+### addLeads
 addLeads([ApiClub\AmoCRM\request\options\Lead[]](#request_options_lead) | [ApiClub\AmoCRM\request\options\Lead](#request_options_lead) $leads):array  
 Функция, которая добавляет лиды и возвращает ассоциативный массив с id добавленных лидов.
 
-#### Базовый пример
+### Базовый пример
 [Исходный код](example/lead/add/01_basic.php)
 ```php
 <?
@@ -49,13 +50,13 @@ $res = $amo->addLeads($lead_options); // [0]=>id созданного лида
 ```
 
 <a name="update_leads"></a>
-#### updateLeads
+### updateLeads
 updateLeads([ApiClub\AmoCRM\request\options\Lead[]](#request_options_lead) | [ApiClub\AmoCRM\request\options\Lead](#request_options_lead) $leads):array
 
 
-## Настройки
+# Настройки
 <a name="request_options_account"></a>
-### ApiCLUB\AmoCRM\request\options\Account
+## ApiCLUB\AmoCRM\request\options\Account
 Настройки для запроса:
 - [account()](#account)
 
@@ -82,14 +83,14 @@ bool **$free_users** = false;
 
 
 <a name="request_options_lead"></a>
-### ApiCLUB\AmoCRM\request\options\Lead
+## ApiCLUB\AmoCRM\request\options\Lead
 Настройки для запросов: 
 - [addLeads()](#add_leads)
 - [updateLeads()](#update_leads)
 
 
 <a name="request_options_add_lead"></a>
-### ApiCLUB\AmoCRM\request\options\AddLead
+## ApiCLUB\AmoCRM\request\options\AddLead
 
 <a name="request_options_update_lead"></a>
-### ApiCLUB\AmoCRM\request\options\UpdateLead
+## ApiCLUB\AmoCRM\request\options\UpdateLead
