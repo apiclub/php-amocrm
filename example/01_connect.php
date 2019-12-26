@@ -25,7 +25,10 @@ $y = new \ApiClub\AmoCRM\request\options\Lead('Дарова 3');
 $amo->addLeads($x);
 $x->name = 'Дарова 2';
 
-$amo->addLeads([$x,$y]);
+$r = $amo->addLeads(['a'=>$x,'b'=>null,$y]);
+echo '<pre>';
+echo var_dump($r);
+echo '</pre>';
 
 /**/
 

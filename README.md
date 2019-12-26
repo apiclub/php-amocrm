@@ -5,17 +5,25 @@
 ### Аккаунт
 - [account](#account)
 
+### Лиды
+- [addLeads](#add_leads)
+- [updateLeads](#update_leads)
+
 
 ## Запросы
 <a name="account"></a>
 account( [ApiCLUB\AmoCRM\request\options\Account](#request_options_account) $options )  
-Возвращает информацию об аккаунте
+Возвращает информацию об аккаунте  
+
+<a name="add_leads"></a>
+addLeads([ApiClub\AmoCRM\request\options\Lead[]](#request_options_lead) | [ApiClub\AmoCRM\request\options\Lead](#request_options_lead) $leads):array
 
 
 ## Настройки
 <a name="request_options_account"></a>
 ### ApiCLUB\AmoCRM\request\options\Account
-Настройки для запроса [account()](#account)
+Настройки для запроса:
+- [account()](#account)
 
 bool **$custom_fields** = false;    
 Вернёт информацию по всем дополнительным полям в аккаунте    
@@ -37,3 +45,10 @@ bool **$task_types** = false;
 
 bool **$free_users** = false;  
 Вернёт информацию в том числе и по бесплатным пользователям  
+
+
+<a name="request_options_lead"></a>
+### ApiCLUB\AmoCRM\request\options\Lead
+Настройки для запросов: 
+- [addLeads()](#add_leads)
+- [updateLeads()](#update_leads)

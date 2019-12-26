@@ -78,20 +78,33 @@ class AmoCRM {
 
 
     /**
+     * Функция добавления новых лидов
      * @param RequestOptionsLead[] | RequestOptionsLead $leads
+     * @return array ассоциативный массив id добавленных сущностей
      */
-    public function addLeads($leads){
+    public function addLeads($leads):array {
         if(!is_array($leads)) $leads = [$leads];
         $data = [];
+        $keys = [];
+        $res  = [];
         /** @var RequestOptionsLead $lead */
-        foreach ($leads as $lead){
-            if(!$lead->created_at) {
-                $lead->created_at = time();
+        foreach ($leads as $k=>$lead){
+            if(get_class($lead)=='ApiClub\AmoCRM\request\options\Lead') {
+                if (!$lead->created_at) {
+                    $lead->created_at = time();
+                }
+                $data[] = $lead->prepare();
+                $keys[] = $k;
             }
-            $data[] = $lead->prepare();
+            $res[$k] = null;
         }
-        return $this->request('api/v2/leads',['add'=>$data],'POST');
+        $r =  $this->request('api/v2/leads',['add'=>$data],'POST');
+        foreach ($r['_embedded']['items'] as $k=>$v){
+            $res[$keys[$k]] = $v['id'];
+        }
+        return $res;
     }
+
 
     protected function request($link,$data=[],$custom_request="GET"){
         return self::_request($this->domain, $this->token, $this->link($link), $data, $custom_request);
@@ -124,16 +137,15 @@ class AmoCRM {
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
 
         $out = curl_exec($curl); #Инициируем запрос к API и сохраняем ответ в переменную
-
-        $code = curl_getinfo($curl, CURLINFO_HTTP_CODE); #Получим HTTP-код ответа сервера
+        //$code = curl_getinfo($curl, CURLINFO_HTTP_CODE); #Получим HTTP-код ответа сервера
         curl_close($curl); #Завершаем сеанс cURL
-        $out = json_decode($out,true);
+        $res = json_decode($out,true);
 
         echo '<pre>';
-        echo var_dump($link,$out);
+        echo var_dump($link,$res);
         echo '</pre>';
 
-        return $out;
+        return $res;
     }
 
 }
