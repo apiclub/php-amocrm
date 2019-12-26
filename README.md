@@ -1,6 +1,7 @@
 # php-amocrm
 Статус: в разработке
 
+# Навигация
 ## Стандартные запросы
 ### Аккаунт
 - [account](#account)
@@ -9,6 +10,10 @@
 - [addLeads](#add_leads) - добавляет лидов
 - [updateLeads](#update_leads) - обновляет лиды
 
+## Настройки
+- [ApiClub\AmoCRM\request\options\Lead](#request_options_lead) - Основной класс настроек для запросов связанных с лидами
+- [ApiClub\AmoCRM\request\options\AddLead](#request_options_add_lead) - Класс для быстрого создания настроек для добавления лидов
+- [ApiClub\AmoCRM\request\options\UpdateLead](#request_options_update_lead)  - Класс для быстрого создания настроек для обновления лидов
 
 ## Стандартные запросы
 ### Аккаунт
